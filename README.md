@@ -115,7 +115,7 @@ var drafts = new DraftApi(http, settings);
 var added = await drafts.AddDocumentAsync(addKey, new NewDocument(name: "letter.pdf", sizeBytes: pdf.Length));
 if (added.Upload == null)
 {
-    throw new InvalidOperationException("no link to upload to: the request was sent again with its key");
+    throw new InvalidOperationException("no link to upload to: the document is ready or removed");
 }
 
 using var put = new HttpRequestMessage(HttpMethod.Put, added.Upload.Url) { Content = new ByteArrayContent(pdf) };
@@ -144,10 +144,10 @@ with the same key within 24 hours, the request is answered as it was the first t
 twice, so a retry after a timeout can't send a fax twice. The SDK makes up no key itself: one it made
 would be new on each try, and protect nothing.
 
-The answer to a request sent again keeps none of its signed links, nor an endpoint's secret:
-`Upload`, a document's `Url` and an endpoint's `Secret` come back null. So an upload that
-`AddDocumentAsync` gave, asked for again with its key, has no link to send the bytes to. Take that
-document out with `RemoveDocumentAsync`, and add it again with a new key. An endpoint whose first
+The answer to a request sent again keeps none of its signed links, nor an endpoint's secret: a
+document's `Url` and an endpoint's `Secret` come back null. `Upload` is signed again instead while
+its document is still uploading: asked for again with its key, `AddDocumentAsync` gives a fresh link
+to send the bytes to, and null once the document is ready or removed. An endpoint whose first
 answer you lost has no secret to check its deliveries by: remove it with
 `RemoveWebhookEndpointAsync`, and register it again with a new key.
 
