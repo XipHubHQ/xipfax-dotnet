@@ -162,7 +162,7 @@ public sealed class ContractSpecs
     {
         var contract = Contract.Load();
 
-        Assert.Equal(contract.Version, ApiVersion.Value);
+        Assert.Equal(ApiVersion.Value, contract.Version);
         foreach (var operation in contract.Operations)
         {
             Assert.Empty(contract.VersionRefused(operation, ApiVersion.Value));
