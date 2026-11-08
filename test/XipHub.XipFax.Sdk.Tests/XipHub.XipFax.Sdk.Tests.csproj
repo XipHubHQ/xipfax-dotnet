@@ -22,6 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- The quickstart's steps, which QuickstartSpecs walk against the stand-in: the file
+         examples/Quickstart runs, compiled here too, without its Program.cs. -->
+    <Compile Include="../../examples/Quickstart/Quickstart.cs" Link="Quickstart.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- The API's document as the repository holds it, which the specs read each request, answer
          and event against. -->
     <None Include="../../openapi.json" Link="openapi.json" CopyToOutputDirectory="PreserveNewest" />

@@ -62,6 +62,31 @@ what `HttpClient` threw.
 `new XipFaxConfiguration(apiKey, basePath)` sends to another address than
 `https://api.xipfax.com`.
 
+## The quickstart
+
+[`examples/Quickstart`](https://github.com/XipHubHQ/xipfax-dotnet/tree/main/examples/Quickstart)
+takes the steps of [XipFax's quickstart](https://developer.xipfax.com/docs/guides/quickstart/)
+through the SDK. Run it from a clone of this repository, with the .NET 10 SDK:
+
+```sh
+XIPFAX_API_KEY=xipfax_key_live_… dotnet run --project examples/Quickstart
+```
+
+That takes the free steps alone: what a fax costs, and the offices that take Form 2848 from Ohio,
+with their fax numbers.
+
+To send a fax too, name a fax number of yours and a public https link to a PDF:
+
+```sh
+XIPFAX_TO='+1 202 555 0143' XIPFAX_PDF_URL=https://example.com/letter.pdf \
+  XIPFAX_API_KEY=xipfax_key_live_… dotnet run --project examples/Quickstart
+```
+
+**That step sends a real fax, and it's charged.** Its pages count on your plan, or where you have no
+plan its price is held on the card you saved, and taken once it's delivered. A fax that fails costs
+nothing. The quickstart says so before it sends, and sends only once you type `send`. Then it
+follows the fax until it's delivered, and gives the link to its confirmation.
+
 ## Methods
 
 | Method                                             | Request                                        | What it does                                                                         |
@@ -159,7 +184,8 @@ every request; and the webhooks, which are XipFax's requests to your server, the
 hand-written part, and `templates/` adds the repository's own settings to the project the generator
 writes. To update the SDK, copy the new document over `openapi.json`, run `scripts/generate.sh`, and
 commit what changes. `scripts/gates.sh` checks that the SDK is what the document generates, then
-builds and packs it; `scripts/test.sh` runs the specs. Both run in the .NET SDK's container, with no
+builds it with its specs and the quickstart, and packs it; `scripts/test.sh` runs the specs, which
+walk the quickstart against a stand-in of the API. Both run in the .NET SDK's container, with no
 network, after `scripts/fetch.sh` has fetched the packages.
 
 ## Help
@@ -168,4 +194,4 @@ Write to [help@xipfax.com](mailto:help@xipfax.com).
 
 ## License
 
-[MIT](LICENSE).
+[MIT](https://github.com/XipHubHQ/xipfax-dotnet/blob/main/LICENSE).

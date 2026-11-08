@@ -1,8 +1,8 @@
 #!/bin/sh
 # The repository's gate, run before every pull request: the SDK as openapi.json generates it, its
-# project where the solution and the specs' project name it, and the build, from nothing, which
-# compiles the SDK for .NET Standard 2.0 and its specs for .NET 10 and packs the SDK's package. The
-# specs run once before each release, by scripts/test.sh, not here. The build runs in the .NET SDK's
+# project where the solution, the specs' project and the quickstart's name it, and the build, from
+# nothing, which compiles the SDK for .NET Standard 2.0, and its specs and the quickstart for .NET 10,
+# and packs the SDK's package. The specs run once before each release, by scripts/test.sh, not here. The build runs in the .NET SDK's
 # container with no network, on what scripts/fetch.sh fetched, and restores in locked mode: a package
 # the repository's .nuget/packages lacks, or one a project's lock doesn't name, stops the gate, named.
 set -eu
@@ -27,21 +27,22 @@ if [ -n "$changed" ]; then
 fi
 
 # The project the generator writes from openapi-generator.yaml's packageName, held to where the
-# solution and the specs' project name it.
+# solution names it, and to the specs' project and the quickstart's, which take it.
 package=$(sed -n 's/^packageName: //p' openapi-generator.yaml)
 project="src/$package/$package.csproj"
-specs=test/XipHub.XipFax.Sdk.Tests/XipHub.XipFax.Sdk.Tests.csproj
 if ! grep -q -F "Path=\"$project\"" XipFax.slnx; then
   echo "XipFax.slnx doesn't name $project, the project openapi-generator.yaml's packageName makes: name it there." >&2
   exit 1
 fi
-if ! grep -q -F "Include=\"../../$project\"" "$specs"; then
-  echo "$specs doesn't take $project, the project openapi-generator.yaml's packageName makes: name it there." >&2
-  exit 1
-fi
+for taker in test/XipHub.XipFax.Sdk.Tests/XipHub.XipFax.Sdk.Tests.csproj examples/Quickstart/Quickstart.csproj; do
+  if ! grep -q -F "Include=\"../../$project\"" "$taker"; then
+    echo "$taker doesn't take $project, the project openapi-generator.yaml's packageName makes: name it there." >&2
+    exit 1
+  fi
+done
 
 # From nothing, so that nothing an earlier build wrote is built on or packed.
-rm -rf src/*/bin src/*/obj test/*/bin test/*/obj artifacts
+rm -rf src/*/bin src/*/obj test/*/bin test/*/obj examples/*/bin examples/*/obj artifacts
 sh scripts/docker.sh offline sdk sh -c '
   dotnet restore XipFax.slnx --locked-mode -p:NuGetAudit=false &&
   dotnet build XipFax.slnx --configuration Release --no-restore &&
