@@ -1,0 +1,11 @@
+# What openapi-generator would write that the repository keeps as its own or doesn't keep: the
+# README and .gitignore are the repository's own, and the generator's solution, CI file, push
+# script, docs, test project and copy of the document aren't kept.
+README.md
+.gitignore
+*.sln
+appveyor.yml
+git_push.sh
+api/openapi.yaml
+docs/**
+src/XipHub.XipFax.Sdk.Test/**

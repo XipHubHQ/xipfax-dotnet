@@ -1,0 +1,51 @@
+# openapi-generator 7.17.0's settings for the SDK, which scripts/generate.sh passes it with the
+# document scripts/sdk-document.jq writes. The client is the generator's httpclient library: .NET's
+# own HttpClient, with Newtonsoft.Json reading and writing JSON, for .NET Standard 2.0, which every
+# .NET since .NET Core 2.0 implements, and the .NET Framework from 4.6.1.
+library: httpclient
+# The SDK's package and its namespace, named here alone: the generator writes the project at
+# src/<it>/<it>.csproj, and scripts/generate.sh writes ApiVersion.cs in it.
+packageName: XipHub.XipFax.Sdk
+# The release, which the generator writes as Configuration.Version and in the project, and which
+# XipFaxConfiguration names in each request's User-Agent, as xipfax-dotnet/0.1.0. The generator's own
+# User-Agent setting isn't used, since its Configuration URL-encodes it, slashes and all.
+packageVersion: 0.1.0
+targetFramework: netstandard2.0
+netCoreProjectFile: true
+# The project writes the assembly's attributes from the package's own (GenerateAssemblyInfo, in
+# templates/netcore_project.additions.mustache), so the generator writes no AssemblyInfo.cs.
+optionalAssemblyInfo: false
+hideGenerationTimestamp: true
+# The API refuses what it doesn't take, so the SDK sends a request as it's given rather than checking
+# it first, as the TypeScript SDK does: no model checks itself, and the SDK needs no
+# System.ComponentModel.Annotations.
+validatable: false
+# What nuget.org shows of the package, as the other SDKs name theirs.
+packageTitle: XipFax SDK
+packageDescription: XipFax's API for .NET, generated from its OpenAPI document.
+packageAuthors: XipFax
+packageCompany: XipFax
+packageCopyright: Copyright (c) 2026 XipHub Inc.
+licenseId: MIT
+packageTags: xipfax;fax;api;sdk
+gitHost: github.com
+gitUserId: XipHubHQ
+gitRepoId: xipfax-dotnet
+templateDir: templates
+globalProperties:
+  apiTests: 'false'
+  modelTests: 'false'
+  apiDocs: 'false'
+  modelDocs: 'false'
+# The API's refusal is ApiError, as the TypeScript SDK's is.
+modelNameMappings:
+  Error: ApiError
+inlineSchemaNameMappings:
+  Error_error: ApiErrorObject
+  Error_error_details_inner: ApiErrorDetail
+  Office_sources_inner: OfficeSource
+# A fax's time_zone is its TimeZoneId, as .NET names a time zone's IANA name (TimeZoneInfo.Id). The
+# generator keeps TimeZone itself for System.TimeZone, and would call the member VarTimeZone, whatever
+# a mapping names it.
+nameMappings:
+  time_zone: TimeZoneId

@@ -1,0 +1,25 @@
+  <!-- The repository's own settings, which the generator appends from
+       templates/netcore_project.additions.mustache, after its own, so that each wins over the
+       generator's. -->
+  <PropertyGroup>
+    <!-- The assembly's attributes, its version among them, written from the package's own. -->
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Product>XipFax SDK</Product>
+    <PackageProjectUrl>https://github.com/XipHubHQ/xipfax-dotnet</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <!-- The generator says "Minor update" of every release, so the package carries no notes of its
+         own: what each release changes is in the repository's releases. -->
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <!-- The XML documentation, which the package carries beside the assembly, written where the .NET
+         SDK writes it on every system, in place of the generator's Windows path. -->
+    <DocumentationFile></DocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- The packages' locks and their audit are both projects' own, in Directory.Build.props. -->
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- The httpclient library's code uses neither: JsonSubTypes reads a discriminator, which no
+         schema of the document has, and System.Web is the .NET Framework's own. -->
+    <PackageReference Remove="JsonSubTypes" />
+    <Reference Remove="System.Web" />
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>

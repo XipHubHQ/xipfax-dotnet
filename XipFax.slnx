@@ -1,0 +1,6 @@
+<Solution>
+  <!-- The SDK, as scripts/generate.sh writes it, and its specs. scripts/gates.sh holds the SDK's path
+       to openapi-generator.yaml's packageName. -->
+  <Project Path="src/XipHub.XipFax.Sdk/XipHub.XipFax.Sdk.csproj" />
+  <Project Path="test/XipHub.XipFax.Sdk.Tests/XipHub.XipFax.Sdk.Tests.csproj" />
+</Solution>

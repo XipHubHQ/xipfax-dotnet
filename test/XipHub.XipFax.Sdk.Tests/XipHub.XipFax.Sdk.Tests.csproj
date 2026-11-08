@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- The SDK's specs, which scripts/test.sh runs once before each release, as the TypeScript SDK's
+       are: an xUnit v3 program, run by dotnet run, whose every request goes to a stand-in in its own
+       process, so that no spec reaches a network. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <RootNamespace>XipHub.XipFax.Sdk.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" Version="4.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The SDK, at the path scripts/gates.sh holds to openapi-generator.yaml's packageName. -->
+    <ProjectReference Include="../../src/XipHub.XipFax.Sdk/XipHub.XipFax.Sdk.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The API's document as the repository holds it, which the specs read each request, answer
+         and event against. -->
+    <None Include="../../openapi.json" Link="openapi.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
