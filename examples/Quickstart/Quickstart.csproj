@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- XipFax's quickstart through the SDK, which you run from a clone of this repository by
+       dotnet run, as the README says. It builds the SDK from its project here, at the path
+       scripts/gates.sh holds to openapi-generator.yaml's packageName. The specs walk Quickstart.cs,
+       which their project compiles too, against their stand-in. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <RootNamespace>XipHub.XipFax.Examples</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../src/XipHub.XipFax.Sdk/XipHub.XipFax.Sdk.csproj" />
+  </ItemGroup>
+
+</Project>

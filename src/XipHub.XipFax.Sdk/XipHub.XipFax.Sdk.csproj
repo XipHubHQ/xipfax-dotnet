@@ -1,0 +1,62 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo><!-- setting GenerateAssemblyInfo to false causes this bug https://github.com/dotnet/project-system/issues/3934 -->
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>XipHub.XipFax.Sdk</AssemblyName>
+    <PackageId>XipHub.XipFax.Sdk</PackageId>
+    <OutputType>Library</OutputType>
+    <Authors>XipFax</Authors>
+    <Company>XipFax</Company>
+    <AssemblyTitle>XipFax SDK</AssemblyTitle>
+    <Description>XipFax&#39;s API for .NET, generated from its OpenAPI document.</Description>
+    <Copyright>Copyright (c) 2026 XipHub Inc.</Copyright>
+    <RootNamespace>XipHub.XipFax.Sdk</RootNamespace>
+    <Version>0.1.0</Version>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\XipHub.XipFax.Sdk.xml</DocumentationFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/XipHubHQ/xipfax-dotnet.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>Minor update</PackageReleaseNotes>
+    <PackageTags>xipfax;fax;api;sdk</PackageTags>
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JsonSubTypes" Version="2.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Polly" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="System.Web" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web" />
+  </ItemGroup>
+  <!-- The repository's own settings, which the generator appends from
+       templates/netcore_project.additions.mustache, after its own, so that each wins over the
+       generator's. -->
+  <PropertyGroup>
+    <!-- The assembly's attributes, its version among them, written from the package's own. -->
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Product>XipFax SDK</Product>
+    <PackageProjectUrl>https://github.com/XipHubHQ/xipfax-dotnet</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <!-- The generator says "Minor update" of every release, so the package carries no notes of its
+         own: what each release changes is in the repository's releases. -->
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <!-- The XML documentation, which the package carries beside the assembly, written where the .NET
+         SDK writes it on every system, in place of the generator's Windows path. -->
+    <DocumentationFile></DocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- The packages' locks and their audit are both projects' own, in Directory.Build.props. -->
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- The httpclient library's code uses neither: JsonSubTypes reads a discriminator, which no
+         schema of the document has, and System.Web is the .NET Framework's own. -->
+    <PackageReference Remove="JsonSubTypes" />
+    <Reference Remove="System.Web" />
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,7 @@
+<Solution>
+  <!-- The SDK, as scripts/generate.sh writes it, its specs, and the quickstart. scripts/gates.sh holds
+       the SDK's path to openapi-generator.yaml's packageName. -->
+  <Project Path="src/XipHub.XipFax.Sdk/XipHub.XipFax.Sdk.csproj" />
+  <Project Path="test/XipHub.XipFax.Sdk.Tests/XipHub.XipFax.Sdk.Tests.csproj" />
+  <Project Path="examples/Quickstart/Quickstart.csproj" />
+</Solution>

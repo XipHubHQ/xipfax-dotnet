@@ -1,0 +1,17 @@
+<Project>
+  <!-- What both of the repository's projects take, the SDK's and its specs': MSBuild reads this file
+       for each before the project's own settings. -->
+  <PropertyGroup>
+    <!-- Every package a project takes, and every package those take, is locked in the project's
+         packages.lock.json, which scripts/fetch.sh writes: the gate and the specs restore in locked
+         mode, which fails where a project's packages aren't its lock's. -->
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <!-- At the fetch, NuGet's audit reads nuget.org's advisories and fails the restore on any package
+         with one, of any severity, a package's own packages among them, and on advisories it can't
+         read (NU1900), so that an audit that didn't run can't pass. The gate and the specs, which have
+         no network, restore with the audit off. -->
+    <NuGetAuditMode>all</NuGetAuditMode>
+    <NuGetAuditLevel>low</NuGetAuditLevel>
+    <WarningsAsErrors>$(WarningsAsErrors);NU1900;NU1901;NU1902;NU1903;NU1904</WarningsAsErrors>
+  </PropertyGroup>
+</Project>
