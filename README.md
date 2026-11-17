@@ -6,12 +6,6 @@ the API's own document, so its methods and types are the API's. It's a .NET Stan
 it runs on every .NET from .NET Core 2.0 and on .NET Framework 4.6.1 or later, and it takes
 Newtonsoft.Json and Polly.
 
-## Install
-
-```sh
-dotnet add package XipHub.XipFax.Sdk
-```
-
 ## Make an API key
 
 Sign in to the [developer console](https://developer.xipfax.com/console/), open API keys and make a
@@ -187,10 +181,6 @@ commit what changes. `scripts/gates.sh` checks that the SDK is what the document
 builds it with its specs and the quickstart, and packs it; `scripts/test.sh` runs the specs, which
 walk the quickstart against a stand-in of the API. Both run in the .NET SDK's container, with no
 network, after `scripts/fetch.sh` has fetched the packages.
-
-## Help
-
-Write to [help@xipfax.com](mailto:help@xipfax.com).
 
 ## License
 
