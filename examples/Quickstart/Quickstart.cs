@@ -43,8 +43,8 @@ internal static class Quickstart
     /// <summary>What the step that sends says first, as the docs' quickstart says it.</summary>
     public const string RealAndCharged =
         "This step sends a real fax, and it’s charged. It goes to the number you name, so name one of your own. "
-        + "Its pages count on your plan, or where you have no plan its price is held on the card you saved, "
-        + "and taken once it’s delivered. A fax that fails costs nothing.";
+        + "Its pages count on your plan where it covers the number, or where you have no plan its price is held "
+        + "on the card you saved, and taken once it’s delivered. A fax that fails costs nothing.";
 
     /// <summary>
     /// Takes the quickstart's steps, each request sent by http with the settings. The API's refusal
@@ -61,7 +61,7 @@ internal static class Quickstart
 
         // 1. What a fax costs. This costs nothing, and it shows your key works.
         var quote = await quotes.GetQuoteAsync(1, cancellationToken);
-        input.Say($"A one-page fax costs {quote.PriceShown} without a plan: {quote.Terms}");
+        input.Say($"A one-page fax to a number in the US, its territories or Canada costs {quote.PriceShown} without a plan: {quote.Terms}");
 
         // 2. Where a form goes: the offices that take Form 2848 from Ohio, and their numbers. Also free.
         var found = await offices.ListOfficesAsync(

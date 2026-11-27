@@ -44,6 +44,7 @@ src/XipHub.XipFax.Sdk/Model/PlanAnswer.cs
 src/XipHub.XipFax.Sdk/Model/PlanNumber.cs
 src/XipHub.XipFax.Sdk/Model/PlanPages.cs
 src/XipHub.XipFax.Sdk/Model/Quote.cs
+src/XipHub.XipFax.Sdk/Model/QuoteBody.cs
 src/XipHub.XipFax.Sdk/Model/QuotePrice.cs
 src/XipHub.XipFax.Sdk/Model/SendDraft.cs
 src/XipHub.XipFax.Sdk/Model/Sent.cs

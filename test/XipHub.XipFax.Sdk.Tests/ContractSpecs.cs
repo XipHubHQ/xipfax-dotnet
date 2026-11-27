@@ -33,6 +33,11 @@ public sealed class ContractSpecs
             using var api = new QuoteApi(http, settings);
             await api.GetQuoteAsync(3, cancel);
         },
+        ["quoteNumber"] = async (http, settings, cancel) =>
+        {
+            using var api = new QuoteApi(http, settings);
+            await api.QuoteNumberAsync(new QuoteBody(pages: 3, toNumber: "+44 20 7946 0958"), cancel);
+        },
         ["getDraft"] = async (http, settings, cancel) =>
         {
             using var api = new DraftApi(http, settings);
@@ -108,6 +113,7 @@ public sealed class ContractSpecs
     private static readonly Dictionary<string, string> AnswerOf = new()
     {
         ["getQuote"] = Answers.Quote,
+        ["quoteNumber"] = Answers.Quote,
         ["getDraft"] = "{\"id\":\"fax_1\",\"documents\":[]}",
         ["addDocument"] = "{\"document\":" + Answers.Document("doc_1", "letter.pdf") + ",\"upload\":null}",
         ["completeDocument"] = Answers.Document("doc_1", "letter.pdf"),
